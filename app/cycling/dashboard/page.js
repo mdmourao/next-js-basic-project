@@ -26,18 +26,12 @@ export default function CyclingDashboard() {
             setCountDocas(stationsAvailability.data.features.reduce((acc, feature) => acc + feature.properties.num_docas, 0))
         }
     }, [stationsAvailability])
-
-
-    if (error) {
-        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1>Error fetching data! Try again later</h1>
-        </div>
-    }
-    
+  
     return (
         <>
             <div className="flex items-center justify-between flex-col p-2">
                 <p className="text-lg font-bold">Central de Controlo EMEL Bicicletas</p>
+                {error && <h1>Error fetching data! Try again later</h1>}
             </div>
             <div className="flex flex-wrap-reverse">
                 <div className="basis-full sm:basis-1/2 p-6 ">
