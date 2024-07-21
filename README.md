@@ -1,5 +1,23 @@
 # Next.Js Basic Project
 
+Basic Nextjs project using EMEL Cycling API
+
+Features:
+1. Dashboard
+2. List 
+
+## Deployed at Vercel
+
+[Vercel URL](https://next-js-basic-project-lfur7khfc-matim-mouraos-projects.vercel.app/)
+
+## Run Dev
+
+```
+npm run dev
+```
+
+### Refs
+
 1. File Structure -> https://nextjs.org/docs/app/building-your-application/routing#colocation
 2. Componets MUI
 

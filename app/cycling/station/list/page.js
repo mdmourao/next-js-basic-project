@@ -19,8 +19,6 @@ const CustomMap = dynamic(() => import('../../../components/map/CustomMap'), {
     ssr: false
 });
 
-
-
 export default function StationList() {
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
@@ -49,9 +47,7 @@ export default function StationList() {
     }
 
     // Render Data
-    return <div className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>Station List</h1>
-
+    return <div className="flex bg-[url('/bicycle.jpg')]  bg-repeat bg-center shadow-xl rounded-lg min-h-screen flex-col items-center justify-between p-24" >
         {/* Modal (show map) */}
         <CustomModal
             aria-labelledby="unstyled-modal-title"
@@ -69,40 +65,42 @@ export default function StationList() {
             </ModalContent>
         </CustomModal>
 
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell>ID</TableCell>
-                        <TableCell>Localização</TableCell>
-                        <TableCell>Bicicletas Disponíveis</TableCell>
-                        <TableCell>Wi-Fi</TableCell>
-                        <TableCell>Ações</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {stations.data.map((station) => (
-                        <TableRow
-                            key={station.estacaolocalizacao + station.id_expl}
-                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                            <TableCell component="th" scope="row">
-                                {station.id_expl || "No ID"}
-                            </TableCell>
-                            <TableCell >{station.estacaolocalizacao}</TableCell>
-                            <TableCell >{station.dispbicicleta}</TableCell>
-                            <TableCell >{station.wifi ? 'Sim' : 'Não'}</TableCell>
-                            <TableCell >
-                                <Button onClick={() => {
-                                    setSelectedStation(station);
-                                    setOpen(true);
-                                }} variant="contained">Mapa</Button>
-                            </TableCell>
+        <div>
+            <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>ID</TableCell>
+                            <TableCell >Localização</TableCell>
+                            <TableCell align="right">Bicicletas Disponíveis</TableCell>
+                            <TableCell align="right">WiFi</TableCell>
+                            <TableCell >Ações</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+                    </TableHead>
+                    <TableBody>
+                        {stations.data.map((station) => (
+                            <TableRow
+                                key={station.estacaolocalizacao + station.id_expl}
+                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                            >
+                                <TableCell component="th" scope="row">
+                                    {station.id_expl || "No ID"}
+                                </TableCell>
+                                <TableCell>{station.estacaolocalizacao}</TableCell>
+                                <TableCell align="right">{station.dispbicicleta}</TableCell>
+                                <TableCell align="right">{station.wifi ? 'Sim' : 'Não'}</TableCell>
+                                <TableCell >
+                                    <Button onClick={() => {
+                                        setSelectedStation(station);
+                                        setOpen(true);
+                                    }} variant="contained">Mapa</Button>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     </div>
 }
 
