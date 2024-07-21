@@ -12,12 +12,13 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Backdrop, Button, css, Modal, styled } from "@mui/material";
 import { grey } from "@mui/material/colors";
-
-import { MapContainer, Marker, TileLayer, Popup } from "react-leaflet";
-// Bug on icon https://stackoverflow.com/a/74443999
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import axios from 'axios';
+import dynamic from 'next/dynamic';
+
+const CustomMap = dynamic(() => import('../../../components/map/CustomMap'), {
+    ssr: false
+});
+
 
 
 export default function StationList() {
@@ -64,18 +65,7 @@ export default function StationList() {
                     {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
                 </h2>
 
-                <MapContainer style={{ height: 200 }} center={[selectedStation.latitude, selectedStation.longitude]} zoom={16} scrollWheelZoom={true}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[selectedStation.latitude, selectedStation.longitude]}>
-                        <Popup>
-                            {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
-                        </Popup>
-                    </Marker>
-                </MapContainer>
-
+                <CustomMap height={200} center={[selectedStation.latitude, selectedStation.longitude]} zoom={16} marker={{ position: [selectedStation.latitude, selectedStation.longitude], popUpText: `${selectedStation.estacaolocalizacao} - ${selectedStation.dispbicicleta}` }} />
             </ModalContent>
         </CustomModal>
 

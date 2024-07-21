@@ -1,13 +1,15 @@
 "use client";
 
-import { MapContainer, Marker, TileLayer, Popup, FeatureGroup, GeoJSON } from "react-leaflet";
-import "leaflet-defaulticon-compatibility";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import useSWR from "swr";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
+import dynamic from "next/dynamic";
+
+const CustomMap = dynamic(() => import('../../components/map/CustomMap'), {
+    ssr: false
+});
 
 export default function CyclingDashboard() {
     const router = useRouter()
@@ -27,6 +29,11 @@ export default function CyclingDashboard() {
         }
     }, [stationsAvailability])
 
+    useEffect(() => {
+        // Error: https://stackoverflow.com/questions/74440461/react-leaflet-marker-icon-isnt-showing-my-next-js-app
+
+    }, [])
+
     if (error) {
         return <div className="flex min-h-screen flex-col items-center justify-between p-24">
             <h1>Error fetching data! Try again later</h1>
@@ -40,13 +47,7 @@ export default function CyclingDashboard() {
             </div>
             <div className="flex flex-wrap-reverse">
                 <div className="basis-full sm:basis-1/2 p-6 ">
-                    <MapContainer className="h-96 sm:h-screen" center={[38.71635220104923, -9.14669026619318]} zoom={12} scrollWheelZoom={true}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        {stationsAvailability && <GeoJSON data={stationsAvailability.data}></GeoJSON>}
-                    </MapContainer>
+                    {stationsAvailability && <CustomMap height={"100vh"} center={[38.71635220104923, -9.14669026619318]} zoom={12} geoJsonData={stationsAvailability.data} />}
                 </div>
                 <div className="basis-full sm:basis-1/2 p-6 ">
                     <Card className="mb-2">
