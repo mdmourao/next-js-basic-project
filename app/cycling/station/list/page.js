@@ -64,7 +64,17 @@ export default function StationList() {
                     {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
                 </h2>
 
-               
+                <MapContainer style={{ height: 200 }} center={[selectedStation.latitude, selectedStation.longitude]} zoom={16} scrollWheelZoom={true}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={[selectedStation.latitude, selectedStation.longitude]}>
+                        <Popup>
+                            {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
+                        </Popup>
+                    </Marker>
+                </MapContainer>
 
             </ModalContent>
         </CustomModal>

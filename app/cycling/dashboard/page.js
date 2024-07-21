@@ -15,12 +15,6 @@ export default function CyclingDashboard() {
     const fetcher = (url) => axios.get(url).then(res => res.data)
     const { data: stationsAvailability, error } = useSWR("/api/cycling/gira/station/availability", fetcher);
 
-    if (error) {
-        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1>Error fetching data! Try again later</h1>
-        </div>
-    }
-
     // Manage the count of bicicletas and docas
     const [countBicicleta, setCountBicicleta] = useState(0);
     const [countDocas, setCountDocas] = useState(0);
@@ -32,6 +26,12 @@ export default function CyclingDashboard() {
             setCountDocas(stationsAvailability.data.features.reduce((acc, feature) => acc + feature.properties.num_docas, 0))
         }
     }, [stationsAvailability])
+
+    if (error) {
+        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>Error fetching data! Try again later</h1>
+        </div>
+    }
 
     return (
         <>
