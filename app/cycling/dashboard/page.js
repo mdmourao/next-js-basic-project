@@ -29,11 +29,6 @@ export default function CyclingDashboard() {
         }
     }, [stationsAvailability])
 
-    useEffect(() => {
-        // Error: https://stackoverflow.com/questions/74440461/react-leaflet-marker-icon-isnt-showing-my-next-js-app
-
-    }, [])
-
     if (error) {
         return <div className="flex min-h-screen flex-col items-center justify-between p-24">
             <h1>Error fetching data! Try again later</h1>
@@ -41,9 +36,9 @@ export default function CyclingDashboard() {
     }
 
     return (
-        <>
+        <div className="bg-gradient-to-r from-sky-500 to-indigo-500">
             <div className="flex items-center justify-between flex-col p-2">
-                <p className="text-lg font-bold">Central de Controlo EMEL Bicicletas</p>
+                <p className="text-lg font-bold text-white">Central de Controlo EMEL Bicicletas</p>
             </div>
             <div className="flex flex-wrap-reverse">
                 <div className="basis-full sm:basis-1/2 p-6 ">
@@ -91,6 +86,6 @@ export default function CyclingDashboard() {
                     </Card>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
