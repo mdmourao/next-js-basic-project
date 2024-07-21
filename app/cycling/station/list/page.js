@@ -33,11 +33,24 @@ export default function StationList() {
     const fetcher = (url) => axios.get(url).then(res => res.data)
     const { data: stations, error } = useSWR("/api/cycling/gira/station/list", fetcher);
 
+    // Handle error 
+    if (error) {
+        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>Error fetching data!</h1>
+        </div>
+    }
+
+    // Handle loading
+    if (!stations) {
+        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>Loading...</h1>
+        </div>
+    }
+
     // Render Data
     return <div className="flex min-h-screen flex-col items-center justify-between p-24">
         <h1>Station List</h1>
-        {error && <h1>Error fetching data!</h1>}
-        {!stations && <h1>Loading...</h1>}
+
         {/* Modal (show map) */}
         <CustomModal
             aria-labelledby="unstyled-modal-title"
@@ -51,17 +64,7 @@ export default function StationList() {
                     {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
                 </h2>
 
-                <MapContainer style={{ height: 200 }} center={[selectedStation.latitude, selectedStation.longitude]} zoom={16} scrollWheelZoom={true}>
-                    <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <Marker position={[selectedStation.latitude, selectedStation.longitude]}>
-                        <Popup>
-                            {selectedStation.estacaolocalizacao} - {selectedStation.dispbicicleta}
-                        </Popup>
-                    </Marker>
-                </MapContainer>
+               
 
             </ModalContent>
         </CustomModal>

@@ -15,6 +15,12 @@ export default function CyclingDashboard() {
     const fetcher = (url) => axios.get(url).then(res => res.data)
     const { data: stationsAvailability, error } = useSWR("/api/cycling/gira/station/availability", fetcher);
 
+    if (error) {
+        return <div className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>Error fetching data! Try again later</h1>
+        </div>
+    }
+
     // Manage the count of bicicletas and docas
     const [countBicicleta, setCountBicicleta] = useState(0);
     const [countDocas, setCountDocas] = useState(0);
@@ -26,12 +32,11 @@ export default function CyclingDashboard() {
             setCountDocas(stationsAvailability.data.features.reduce((acc, feature) => acc + feature.properties.num_docas, 0))
         }
     }, [stationsAvailability])
-  
+
     return (
         <>
             <div className="flex items-center justify-between flex-col p-2">
                 <p className="text-lg font-bold">Central de Controlo EMEL Bicicletas</p>
-                {error && <h1>Error fetching data! Try again later</h1>}
             </div>
             <div className="flex flex-wrap-reverse">
                 <div className="basis-full sm:basis-1/2 p-6 ">
@@ -81,16 +86,6 @@ export default function CyclingDashboard() {
                                 Listas
                             </Typography>
                             <Button onClick={() => router.push('/cycling/station/list')} variant="contained" style={{ margin: 10 }}>Abir Lista de Estações</Button>
-                            <Button onClick={() => router.push('/cycling/station/list')} variant="contained" style={{ margin: 10 }}>Abir Lista de Rservas</Button>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="mb-2">
-                        <CardContent>
-                            <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                                Ações
-                            </Typography>
-                            <Button onClick={() => router.push('/cycling/station/list')} variant="contained" style={{ margin: 10 }}>Reservar Bicicleta</Button>
                         </CardContent>
                     </Card>
                 </div>
