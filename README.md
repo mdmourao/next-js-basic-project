@@ -8,7 +8,7 @@ Features:
 
 ## Deployed at Vercel
 
-[Vercel URL](https://next-js-basic-project-lfur7khfc-matim-mouraos-projects.vercel.app/)
+[Vercel URL](https://next-js-basic-project-matim-mouraos-projects.vercel.app/)
 
 ## Run Dev
 
